@@ -1,0 +1,19 @@
+version: "3.7"
+
+services: 
+    gofiber.db:
+        container_name: gofiber_api.pg
+        image: postgres:alpine
+        restart: always
+        ports: 
+            - 5432:5432
+        volumes: 
+            - gofiber_api.pg
+        environment: 
+            - POSTGRES_USER=${DB_USER}
+            - POSTGRES_PASSWORD=${DB_PASS}
+            - POSTGRES_DB=${DB_NAME}
+
+volumes:
+    gofiber_api.pg:
+        name: gofiber_api.pg
