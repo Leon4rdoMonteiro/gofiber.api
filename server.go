@@ -7,18 +7,12 @@ import (
 	"github.com/Leon4rdoMonteiro/gofiber.api/config"
 	"github.com/Leon4rdoMonteiro/gofiber.api/router"
 	"github.com/gofiber/fiber/v2"
-	"github.com/joho/godotenv"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+	_ "github.com/joho/godotenv/autoload"
 	_ "github.com/lib/pq"
 )
 
 func main() {
-	// Load .env file
-	err := godotenv.Load()
-
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
 	// Connect to database
 	if err := config.Connect(); err != nil {
 		log.Fatal(err)
@@ -28,6 +22,9 @@ func main() {
 
 	// Create a Fiber application
 	app := fiber.New()
+
+	// Use fiber logger
+	app.Use(logger.New())
 
 	router.SetupRoutes(app)
 
